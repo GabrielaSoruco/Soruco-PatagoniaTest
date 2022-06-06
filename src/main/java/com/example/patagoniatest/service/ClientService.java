@@ -7,11 +7,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class ClientService {
 
     private final ClientRepository clientRepository;
@@ -38,19 +36,15 @@ public class ClientService {
         return client.orElseThrow(()-> new IllegalArgumentException("No hay registro con el id: " + id));
     }
 
-    public void updateClient(Long id, Client newClient){
-
-        Optional<Client> client = clientRepository.findById(id);
-        if (client.isEmpty()){
-            throw new IllegalStateException("el cliente con el id solicitado, no existe");
+    @Transactional
+    public void updateClient(Client newClient, Long id){
+        Client  client = clientRepository.findById(id).orElseThrow(()->new IllegalStateException("El cliente con el id solicitado, no existe"));
+        if (!client.getFullName().equals(newClient.getFullName())){
+            client.setFullName(newClient.getFullName());
         }
-        else {
-            if (!client.get().equals(newClient.getFullName())){
-                client.get().setFullName(newClient.getFullName());
-            } else if (!client.get().equals(newClient.getIncome())) {
-                client.get().setIncome(newClient.getIncome());
-            }
-            clientRepository.save(client.get());
+        if (!client.getIncome().equals(newClient.getIncome())) {
+            client.setIncome(newClient.getIncome());
         }
+        clientRepository.save(client);
     }
 }

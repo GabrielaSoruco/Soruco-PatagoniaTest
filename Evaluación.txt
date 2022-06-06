@@ -1,0 +1,20 @@
+A partir de la API provista, se solicita generar las siguientes funcionalidades:
+
+- Proceso para obtener un cliente a partir de un id proporcionado desde el path de la petición.
+
+	Dado que queremos retornar un objeto, y podria darse la situacion en que el id proporcionado,
+	no corresponda con ningun cliente guardado. La implementación de esta funcionalidad, deberá llevarse a cabo con Optional.
+
+- Proceso para actualizar un cliente a partir de un id proporcionado desde el path y un Cliente proporcionado desde el cuerpo de la petición.
+
+	La actualización tiene caracter de transacción, por lo que en el servicio, deberemos de agregarle la etiqueta @Transactional.
+
+	En este caso debemos retornar void, por lo que no hara falta el uso de optional, pero manejaremos la posibilidad de que se quiera actualizar
+	un cliente inexistente, con una excepción del tipo "IllegalStateException", la cual informará "el cliente con el id solicitado, no existe".
+	A continuación, deberemos generar dos bloques "if" que comparen los campos "fullName" e "income", del cliente entrante
+	y el cliente a actualizar, en caso de que uno o ambos de los campos, presenten diferencia, se deben actualizar.
+
+- Adjuntar en la raiz del proyecto una carpeta llamada "capturas", donde se ingresen capturas de las nueves funcionalidades testeadas en Postman.
+
+- Subir el desarrollo completo a un repositorio de GitHub con el nombre /[su-apellido]-PatagoniaTest.  
+
