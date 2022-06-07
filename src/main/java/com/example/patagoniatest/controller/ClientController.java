@@ -3,12 +3,10 @@ package com.example.patagoniatest.controller;
 import com.example.patagoniatest.model.Client;
 import com.example.patagoniatest.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.OptionalDouble;
 
 @RestController
 @RequestMapping("/clients")
@@ -44,5 +42,25 @@ public class ClientController {
     @PutMapping("/{id}")
     public void updateClient(@RequestBody Client client, @PathVariable Long id) {
         clientService.updateClient(client, id);
+    }
+
+    @GetMapping("/average")
+    public OptionalDouble averageIncome(){
+        return clientService.getEarningsAverage();
+    }
+
+    @GetMapping("/top/incomes")
+    public List<Client> getTopIncomes(){
+        return clientService.getEarningsList();
+    }
+
+    @GetMapping("/incomes/{margen}")
+    public List<Client> getIncomesPerVariable(@PathVariable Integer margen){
+        return clientService.getEarningsByVar(margen);
+    }
+
+    @GetMapping("/incomes/average/{margen}")
+    public OptionalDouble getEarningPerVariable(@PathVariable Integer margen){
+        return clientService.getEarningAveragePerVar(margen);
     }
 }

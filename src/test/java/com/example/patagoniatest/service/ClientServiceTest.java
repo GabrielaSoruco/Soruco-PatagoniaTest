@@ -8,9 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -27,10 +25,20 @@ class ClientServiceTest {
     private ClientService service;
 
     private Client client;
+    private List<Client> clientList;
 
     @BeforeEach
     void setUp(){
+        clientList = new ArrayList<>();
         client = new Client(10L, "Lionel Messi", 4000);
+    }
+
+    @Test
+    void getClients() {
+        clientList.add(client);
+        when(repository.findAll()).thenReturn(clientList);
+        assertNotNull(service.getClients());
+        assertEquals( "Lionel Messi", clientList.get(0).getFullName());
     }
 
     @Test
@@ -58,18 +66,40 @@ class ClientServiceTest {
     }
 
     @Test
-    void getClients() {
-        List<Client> clientList = new ArrayList<>();
-        clientList.add(new Client(1L, "Bruno Mars", 3500));
-        clientList.add(new Client(2L, "The Weeknd", 3700));
-        when(repository.findAll()).thenReturn(clientList);
-        assertNotNull(service.getClients());
-        assertEquals( "Bruno Mars", clientList.get(0).getFullName());
-    }
-
-    @Test
     void getClient() {
         when(repository.findById(10L)).thenReturn(Optional.of(client));
         assertNotNull(service.findClientById(10L));
+    }
+
+    @Test
+    void getEarningsAverage() {
+        clientList.add(new Client(1L, "Bruno Mars", 4000));
+        clientList.add(client);
+        when(repository.findAll()).thenReturn(clientList);
+        assertEquals(OptionalDouble.of(4000.0), service.getEarningsAverage());
+    }
+
+    @Test
+    void getEarningsList() {
+        clientList.add(new Client(1L, "Bruno Mars", 14000));
+        clientList.add(client);
+        when(repository.findAll()).thenReturn(clientList);
+        assertEquals(List.of(new Client(1L, "Bruno Mars", 14000)), service.getEarningsList());
+    }
+
+    @Test
+    void getEarningsByVar() {
+        clientList.add(new Client(1L, "Bruno Mars", 14000));
+        clientList.add(client);
+        when(repository.findAll()).thenReturn(clientList);
+        assertEquals(List.of(new Client(1L, "Bruno Mars", 14000)), service.getEarningsByVar(10000));
+    }
+
+    @Test
+    void getEarningAveragePerVar() {
+        clientList.add(new Client(1L, "Bruno Mars", 14000));
+        clientList.add(client);
+        when(repository.findAll()).thenReturn(clientList);
+        assertEquals(OptionalDouble.of(14000), service.getEarningAveragePerVar(10000));
     }
 }
