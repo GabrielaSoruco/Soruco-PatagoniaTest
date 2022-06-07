@@ -16,10 +16,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.OptionalDouble;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @WebMvcTest(ClientController.class)
@@ -89,5 +91,47 @@ class ClientControllerTest {
                         .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(client)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         verify(service).updateClient(client, client.getId());
+    }
+
+    @Test
+    void averageIncome() throws Exception {
+        when(service.getEarningsAverage()).thenReturn(OptionalDouble.of(1000));
+        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/clients/average").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(content().string("1000.0"))
+                .andDo(print());
+    }
+
+    @Test
+    void getTopIncomes() throws Exception {
+        List<Client> clientList = new ArrayList<>();
+        clientList.add(new Client(1L, "Brad Pitt", 12000));
+        clientList.add(client);
+        when(service.getEarningsList()).thenReturn(clientList);
+        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/clients/top/incomes").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$[0].fullName").value("Brad Pitt"))
+                .andDo(print());
+    }
+
+    @Test
+    void getIncomesPerVariable() throws Exception {
+        List<Client> clientList = new ArrayList<>();
+        clientList.add(client);
+        when(service.getEarningsByVar(2000)).thenReturn(clientList);
+        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/clients/incomes/{margen}",2000).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$[0].fullName").value("Manuel Ginobili"))
+                .andDo(print());
+        verify(service).getEarningsByVar(2000);
+    }
+
+    @Test
+    void getEarningPerVariable() throws Exception {
+        when(service.getEarningAveragePerVar(2000)).thenReturn(OptionalDouble.of(3000));
+        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/clients/incomes/average/{margen}", 2000).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(content().string("3000.0"))
+                .andDo(print());
     }
 }
