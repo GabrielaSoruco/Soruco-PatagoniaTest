@@ -36,6 +36,8 @@ class ClientServiceTest {
     @Test
     void getClients() {
         clientList.add(client);
+        clientList.add(new Client(12L, "Lionel Hutz", 900));
+        clientList.add(new Client(14L, "Troy Macclure", 1000));
         when(repository.findAll()).thenReturn(clientList);
         assertNotNull(service.getClients());
         assertEquals( "Lionel Messi", clientList.get(0).getFullName());
@@ -74,14 +76,18 @@ class ClientServiceTest {
     @Test
     void getEarningsAverage() {
         clientList.add(new Client(1L, "Bruno Mars", 4000));
+        clientList.add(new Client(12L, "Lionel Hutz", 900));
+        clientList.add(new Client(14L, "Troy Macclure", 1000));
         clientList.add(client);
         when(repository.findAll()).thenReturn(clientList);
-        assertEquals(OptionalDouble.of(4000.0), service.getEarningsAverage());
+        assertEquals(OptionalDouble.of(2475.0), service.getEarningsAverage());
     }
 
     @Test
     void getEarningsList() {
         clientList.add(new Client(1L, "Bruno Mars", 14000));
+        clientList.add(new Client(12L, "Lionel Hutz", 900));
+        clientList.add(new Client(14L, "Troy Macclure", 1000));
         clientList.add(client);
         when(repository.findAll()).thenReturn(clientList);
         assertEquals(List.of(new Client(1L, "Bruno Mars", 14000)), service.getEarningsList());
@@ -90,6 +96,8 @@ class ClientServiceTest {
     @Test
     void getEarningsByVar() {
         clientList.add(new Client(1L, "Bruno Mars", 14000));
+        clientList.add(new Client(12L, "Lionel Hutz", 900));
+        clientList.add(new Client(14L, "Troy Macclure", 1000));
         clientList.add(client);
         when(repository.findAll()).thenReturn(clientList);
         assertEquals(List.of(new Client(1L, "Bruno Mars", 14000)), service.getEarningsByVar(10000));
@@ -98,6 +106,8 @@ class ClientServiceTest {
     @Test
     void getEarningAveragePerVar() {
         clientList.add(new Client(1L, "Bruno Mars", 14000));
+        clientList.add(new Client(12L, "Lionel Hutz", 900));
+        clientList.add(new Client(14L, "Troy Macclure", 1000));
         clientList.add(client);
         when(repository.findAll()).thenReturn(clientList);
         assertEquals(OptionalDouble.of(14000), service.getEarningAveragePerVar(10000));

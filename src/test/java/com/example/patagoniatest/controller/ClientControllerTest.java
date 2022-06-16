@@ -37,7 +37,7 @@ class ClientControllerTest {
 
     @BeforeEach
     void setUp(){
-        client = new Client(12L, "Manuel Ginobili", 3000);
+        client = new Client(16L, "Manuel Ginobili", 3000);
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
     }
@@ -46,6 +46,8 @@ class ClientControllerTest {
     void getClients() throws Exception {
         List<Client> clientList = new ArrayList<>();
         clientList.add(new Client(10L, "Lionel Messi", 4000));
+        clientList.add(new Client(12L, "Lionel Hutz", 900));
+        clientList.add(new Client(14L, "Troy Macclure", 1000));
         clientList.add(client);
         when(service.getClients()).thenReturn(clientList);
         mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/clients").contentType(MediaType.APPLICATION_JSON))
@@ -58,7 +60,7 @@ class ClientControllerTest {
     @Test
     void getClient() throws Exception {
         when(service.findClientById(client.getId())).thenReturn(client);
-        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/clients/12").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/clients/16").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.fullName").value("Manuel Ginobili"))
                 .andExpect(jsonPath("$.income").value(3000));
@@ -78,10 +80,10 @@ class ClientControllerTest {
     @Test
     void deleteClient() throws Exception {
         doNothing().when(service).deleteClient(client.getId());
-        mockMvc.perform(MockMvcRequestBuilders.delete("http://localhost:8080/clients/deleteClient/{id}",client.getId()))
+        mockMvc.perform(MockMvcRequestBuilders.delete("http://localhost:8080/clients/deleteClient/{id}",16))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print());
-        verify(service).deleteClient(12L);
+        verify(service).deleteClient(16L);
     }
 
     @Test
@@ -106,22 +108,26 @@ class ClientControllerTest {
     void getTopIncomes() throws Exception {
         List<Client> clientList = new ArrayList<>();
         clientList.add(new Client(1L, "Brad Pitt", 12000));
+        clientList.add(new Client(12L, "Lionel Hutz", 900));
+        clientList.add(new Client(14L, "Troy Macclure", 1000));
         clientList.add(client);
         when(service.getEarningsList()).thenReturn(clientList);
         mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/clients/top/incomes").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(jsonPath("$[0].fullName").value("Brad Pitt"))
+                .andExpect(jsonPath("$[1].fullName").value("Lionel Hutz"))
                 .andDo(print());
     }
 
     @Test
     void getIncomesPerVariable() throws Exception {
         List<Client> clientList = new ArrayList<>();
+        clientList.add(new Client(12L, "Lionel Hutz", 900));
+        clientList.add(new Client(14L, "Troy Macclure", 1000));
         clientList.add(client);
         when(service.getEarningsByVar(2000)).thenReturn(clientList);
         mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/clients/incomes/{margen}",2000).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(jsonPath("$[0].fullName").value("Manuel Ginobili"))
+                .andExpect(jsonPath("$[2].fullName").value("Manuel Ginobili"))
                 .andDo(print());
         verify(service).getEarningsByVar(2000);
     }
