@@ -7,8 +7,9 @@ spring:
       server:
         git:
           default-label: main
-          uri: https://github.com/GabrielaSoruco/Soruco-PatagoniaTest
+          uri: https://github.com/GabrielaSoruco/Soruco-PatagoniaTest.git
           search-paths: config-data
- application:
+
+  application:
     name: config-service
 
