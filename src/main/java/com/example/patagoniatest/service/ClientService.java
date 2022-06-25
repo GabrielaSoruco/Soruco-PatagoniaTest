@@ -66,12 +66,15 @@ public class ClientService {
 
     public List<Client> getEarningsByVar(Integer margen) {
         List<Client> clients = clientRepository.findAll();
-        return clients.stream().filter(client -> client.getIncome()>margen).collect(Collectors.toList());
+        return clients.stream().filter(client -> client.getIncome()>margen)
+                .collect(Collectors.toList());
     }
 
     public OptionalDouble getEarningAveragePerVar(Integer margen){
         List<Client> clients = clientRepository.findAll();
-        return clients.stream().mapToDouble(Client::getIncome).filter(income -> income>margen).average();
+        return clients.stream().mapToDouble(Client::getIncome)
+                .filter(income -> income>margen)
+                .average();
 
     }
 
