@@ -1,20 +1,17 @@
 package com.example.loanservice.entity;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "loan")
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
-@ToString
+@Data
 public class Loan {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double amount;
     private String type;
-    public Long clientId;
+    private Long clientId;
 }
