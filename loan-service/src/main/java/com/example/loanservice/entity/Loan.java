@@ -16,5 +16,5 @@ public class Loan {
     private Long id;
     private Double amount;
     private String type;
-    public Integer clientId;
+    public Long clientId;
 }

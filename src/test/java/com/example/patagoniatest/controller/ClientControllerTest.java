@@ -1,6 +1,6 @@
 package com.example.patagoniatest.controller;
 
-import com.example.patagoniatest.model.Client;
+import com.example.patagoniatest.entity.Client;
 import com.example.patagoniatest.service.ClientService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

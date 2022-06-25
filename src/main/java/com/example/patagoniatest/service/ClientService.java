@@ -1,6 +1,8 @@
 package com.example.patagoniatest.service;
 
-import com.example.patagoniatest.model.Client;
+import com.example.patagoniatest.entity.Client;
+import com.example.patagoniatest.feignclients.LoanFeignClient;
+import com.example.patagoniatest.model.Loan;
 import com.example.patagoniatest.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +18,12 @@ public class ClientService {
 
     private final ClientRepository clientRepository;
 
+    private final LoanFeignClient loanFeignClient;
+
     @Autowired
-    public ClientService(ClientRepository clientRepository) {
+    public ClientService(ClientRepository clientRepository, LoanFeignClient loanFeignClient) {
         this.clientRepository = clientRepository;
+        this.loanFeignClient = loanFeignClient;
     }
 
     public List<Client> getClients() {
@@ -78,15 +83,8 @@ public class ClientService {
 
     }
 
-        /*
-    * Funcional:
-personas.stream()
-        .map(Persona::getEdad)
-        .filter(edad -> edad >=
-        18)
-        .average()
-        .ifPresent(System.out
-        ::println);
-        * */
-
+    public Loan saveLoan(Long clientId, Loan loan){
+        loan.setClientId(clientId);
+        return loanFeignClient.saveLoan(loan);
+    }
 }

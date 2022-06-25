@@ -1,5 +1,6 @@
 package com.example.patagoniatest.model;
 
+import com.example.patagoniatest.entity.Client;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
