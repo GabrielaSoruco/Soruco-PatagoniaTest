@@ -23,5 +23,4 @@ public class LoanController {
     public List<Loan> getAllLoans(){
         return loanService.getLoans();
     }
-
 }

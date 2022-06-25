@@ -1,0 +1,28 @@
+#MySQL Configuration
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/patagonia_test?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: 261997
+
+  #CONFIGURACION PARA EL CONFIG CLIENT
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8001
+
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: update
+  application:
+    name: loan-service
+
+
+#CONFIG EUREKA CLIENT
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+      fetch-registry: true
+      register-with-eureka: true

@@ -1,4 +1,4 @@
-package com.example.patagoniatest.model;
+package com.example.patagoniatest.entity;
 
 import lombok.*;
 

@@ -1,6 +1,7 @@
 package com.example.patagoniatest.controller;
 
-import com.example.patagoniatest.model.Client;
+import com.example.patagoniatest.entity.Client;
+import com.example.patagoniatest.model.Loan;
 import com.example.patagoniatest.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -62,5 +63,10 @@ public class ClientController {
     @GetMapping("/incomes/average/{margen}")
     public OptionalDouble getEarningPerVariable(@PathVariable Integer margen){
         return clientService.getEarningAveragePerVar(margen);
+    }
+
+    @PostMapping("/saveLoan/{clientId}")
+    public Loan saveLoan(@PathVariable("clientId") Long clientId, @RequestBody Loan loan){
+        return clientService.saveLoan(clientId, loan);
     }
 }
