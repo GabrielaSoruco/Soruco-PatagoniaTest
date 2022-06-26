@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.OptionalDouble;
 
 @RestController
@@ -69,4 +70,10 @@ public class ClientController {
     public Loan saveLoan(@PathVariable("clientId") Long clientId, @RequestBody Loan loan){
         return clientService.saveLoan(clientId, loan);
     }
+
+    @GetMapping("/loansByClient/{clientId}")
+    public Map<String, Object> saveLoan(@PathVariable("clientId") Long clientId){
+        return clientService.getLoansByClientId(clientId);
+    }
+
 }

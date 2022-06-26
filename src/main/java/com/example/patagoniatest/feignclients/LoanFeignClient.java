@@ -2,14 +2,17 @@ package com.example.patagoniatest.feignclients;
 
 import com.example.patagoniatest.model.Loan;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "loan-service", url = "http://localhost:8080")
+import java.util.List;
+
+@FeignClient(name = "loan-service", url = "http://localhost:8082")
 @RequestMapping("/loan")
 public interface LoanFeignClient {
 
     @PostMapping
     Loan saveLoan(@RequestBody Loan loan);
+
+    @GetMapping("/{clientId}")
+    List<Loan> getLoansByClientId(@PathVariable Long clientId);
 }
