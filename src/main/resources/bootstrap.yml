@@ -21,12 +21,3 @@ spring:
     name: clientservice
 
 
-#CONFIG EUREKA CLIENT
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://localhost:8761/eureka
-#      fetch-registry: true
-#      register-with-eureka: true
-
-
