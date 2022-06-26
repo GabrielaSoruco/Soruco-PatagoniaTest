@@ -23,4 +23,9 @@ public class LoanController {
     public List<Loan> getAllLoans(){
         return loanService.getLoans();
     }
+
+    @GetMapping("/{clientId}")
+    public List<Loan> getLoansByClientId(@PathVariable Long clientId){
+        return loanService.getLoansByClientId(clientId);
+    }
 }
