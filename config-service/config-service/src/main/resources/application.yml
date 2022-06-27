@@ -6,7 +6,7 @@ spring:
     config:
       server:
         git:
-          default-label: main
+          default-label: addingSecurity
           uri: https://github.com/GabrielaSoruco/Soruco-PatagoniaTest.git
           search-paths: config-data
 
