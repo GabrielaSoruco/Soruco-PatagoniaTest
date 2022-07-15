@@ -9,10 +9,10 @@ spring:
     password: 261997
 
 #CONFIGURACION PARA EL CONFIG CLIENT
-  cloud:
-    config:
-      enabled: true
-      uri: http://localhost:8001
+#  cloud:
+#    config:
+#      enabled: true
+#      uri: http://localhost:8001
 
   jpa:
     show-sql: true

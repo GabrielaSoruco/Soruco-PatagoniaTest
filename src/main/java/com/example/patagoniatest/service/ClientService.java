@@ -1,16 +1,14 @@
 package com.example.patagoniatest.service;
 
 import com.example.patagoniatest.entity.Client;
-import com.example.patagoniatest.feignclients.LoanFeignClient;
-import com.example.patagoniatest.model.Loan;
+//import com.example.patagoniatest.feignclients.LoanFeignClient;
+//import com.example.patagoniatest.model.Loan;
 import com.example.patagoniatest.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ConcurrentReferenceHashMap;
 
 import javax.transaction.Transactional;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,12 +16,11 @@ public class ClientService {
 
     private final ClientRepository clientRepository;
 
-    private final LoanFeignClient loanFeignClient;
+    //private final LoanFeignClient loanFeignClient;
 
     @Autowired
-    public ClientService(ClientRepository clientRepository, LoanFeignClient loanFeignClient) {
+    public ClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
-        this.loanFeignClient = loanFeignClient;
     }
 
     public List<Client> getClients() {
@@ -83,18 +80,18 @@ public class ClientService {
 
     }
 
-    public Loan saveLoan(Long clientId, Loan loan){
-        Client client = this.findClientById(clientId);
-        loan.setClientId(client.getId());
-        return loanFeignClient.saveLoan(loan);
-    }
-
-    public Map<String, Object> getLoansByClientId(Long clientId){
-        Map<String, Object> loansByClient = new HashMap<>();
-        Client client = this.findClientById(clientId);
-        List<Loan> loans = loanFeignClient.getLoansByClientId(clientId);
-        loansByClient.put("Client", client);
-        loansByClient.put("Loans", loans);
-        return loansByClient;
-    }
+//    public Loan saveLoan(Long clientId, Loan loan){
+//        Client client = this.findClientById(clientId);
+//        loan.setClientId(client.getId());
+//        return loanFeignClient.saveLoan(loan);
+//    }
+//
+//    public Map<String, Object> getLoansByClientId(Long clientId){
+//        Map<String, Object> loansByClient = new HashMap<>();
+//        Client client = this.findClientById(clientId);
+//        List<Loan> loans = loanFeignClient.getLoansByClientId(clientId);
+//        loansByClient.put("Client", client);
+//        loansByClient.put("Loans", loans);
+//        return loansByClient;
+//    }
 }

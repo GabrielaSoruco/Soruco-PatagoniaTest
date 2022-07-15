@@ -1,17 +1,15 @@
-package com.example.patagoniatest;
+package com.example.subjectservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-//import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableEurekaClient
-//@EnableFeignClients
-public class PatagoniaTestApplication {
+public class SubjectServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PatagoniaTestApplication.class, args);
+        SpringApplication.run(SubjectServiceApplication.class, args);
     }
 
 }

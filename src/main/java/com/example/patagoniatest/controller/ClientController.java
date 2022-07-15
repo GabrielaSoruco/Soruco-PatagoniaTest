@@ -66,14 +66,14 @@ public class ClientController {
         return clientService.getEarningAveragePerVar(margen);
     }
 
-    @PostMapping("/saveLoan/{clientId}")
-    public Loan saveLoan(@PathVariable("clientId") Long clientId, @RequestBody Loan loan){
-        return clientService.saveLoan(clientId, loan);
-    }
-
-    @GetMapping("/loansByClient/{clientId}")
-    public Map<String, Object> saveLoan(@PathVariable("clientId") Long clientId){
-        return clientService.getLoansByClientId(clientId);
-    }
+//    @PostMapping("/saveLoan/{clientId}")
+//    public Loan saveLoan(@PathVariable("clientId") Long clientId, @RequestBody Loan loan){
+//        return clientService.saveLoan(clientId, loan);
+//    }
+//
+//    @GetMapping("/loansByClient/{clientId}")
+//    public Map<String, Object> saveLoan(@PathVariable("clientId") Long clientId){
+//        return clientService.getLoansByClientId(clientId);
+//    }
 
 }
