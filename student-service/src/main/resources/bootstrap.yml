@@ -6,3 +6,14 @@ spring:
     config:
       enabled: true
       uri: http://localhost:8001
+
+  #MySQL Configuration
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/patagonia_test
+    username: root
+    password: 261997
+
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: update
